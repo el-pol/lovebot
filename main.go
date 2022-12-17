@@ -5,30 +5,34 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 
-	"github.com/PullRequestInc/go-gpt3"
 	"github.com/joho/godotenv"
+	gogpt "github.com/sashabaranov/go-gpt3"
 )
 
 func main() {
 	godotenv.Load()
 
-	apiKey := os.Getenv("API_KEY")
+	apiKey := os.Getenv("OPENAI_API_KEY")
+
 	if apiKey == "" {
 		log.Fatalln("Missing API KEY")
 	}
 
+	c := gogpt.NewClient(apiKey)
 	ctx := context.Background()
-	client := gpt3.NewClient(apiKey)
 
-	resp, err := client.Completion(ctx, gpt3.CompletionRequest{
-		Prompt:    []string{"The first thing you should know about javascript is"},
-		MaxTokens: gpt3.IntPtr(30),
-		Stop:      []string{"."},
-		Echo:      true,
-	})
+	req := gogpt.CompletionRequest{
+		Model:     "text-davinci-003",
+		MaxTokens: 256,
+		Prompt:    "Generate a love advice sentence. It should be written in the style of an Indian guru:",
+	}
+	resp, err := c.CreateCompletion(ctx, req)
+
 	if err != nil {
 		log.Fatalln(err)
 	}
-	fmt.Println(resp.Choices[0].Text)
+
+	fmt.Println(strings.TrimSpace(resp.Choices[0].Text))
 }
