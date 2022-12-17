@@ -26,7 +26,7 @@ func main() {
 	req := gogpt.CompletionRequest{
 		Model:     "text-davinci-003",
 		MaxTokens: 256,
-		Prompt:    "Generate a love advice sentence. It should be written in the style of an Indian guru:",
+		Prompt:    os.Getenv("PROMPT"),
 	}
 	resp, err := c.CreateCompletion(ctx, req)
 
