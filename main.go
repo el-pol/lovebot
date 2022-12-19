@@ -22,6 +22,14 @@ func main() {
 		log.Fatalf("Error when fetching: %v", err)
 	}
 
+	if result == "" {
+		log.Fatalln("Result is empty")
+	}
+
+	if len(result) >= 280 {
+		log.Fatalln("Result is too long")
+	}
+
 	consumerKey := os.Getenv("CONSUMER_KEY")
 	consumerSecret := os.Getenv("CONSUMER_SECRET")
 	accessToken := os.Getenv("ACCESS_TOKEN")
