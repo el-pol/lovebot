@@ -19,7 +19,7 @@ func main() {
 	result, err := fetch.Fetch()
 
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatalf("Error when fetching: %v", err)
 	}
 
 	consumerKey := os.Getenv("CONSUMER_KEY")
@@ -43,7 +43,7 @@ func main() {
 	bodyReader := bytes.NewReader([]byte(jsonBody))
 	resp, err := httpClient.Post(path, "application/json", bodyReader)
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatalf("Error when posting to twitter: %v", err)
 	}
 	defer resp.Body.Close()
 	body, _ := io.ReadAll(resp.Body)
