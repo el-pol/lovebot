@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -10,11 +11,12 @@ import (
 
 	"os"
 
+	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/dghubble/oauth1"
 	"github.com/joho/godotenv"
 )
 
-func main() {
+func HandleRequest(ctx context.Context) (string, error) {
 	godotenv.Load()
 
 	apiKey := os.Getenv("OPENAI_API_KEY")
@@ -100,4 +102,9 @@ func main() {
 
 	defer response.Body.Close()
 	log.Printf("Response was OK: %v", response)
+	return "finished", nil
+}
+
+func main() {
+	lambda.Start(HandleRequest)
 }
