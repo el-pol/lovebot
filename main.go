@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"io"
 	"log"
 
 	"os"
@@ -53,8 +52,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error when posting to twitter: %v", err)
 	}
-	defer resp.Body.Close()
-	body, _ := io.ReadAll(resp.Body)
-	fmt.Printf("Raw Response Body:\n%v\n", string(body))
 
+	log.Printf("Response was OK: %v", resp)
+	defer resp.Body.Close()
 }

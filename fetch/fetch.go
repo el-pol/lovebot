@@ -34,6 +34,8 @@ func Fetch() (string, error) {
 		return "", err
 	}
 
+	log.Printf("Completion was successful: %+v", resp)
+
 	trimmed := strings.TrimSpace(resp.Choices[0].Text)
 
 	return trimmed, nil
