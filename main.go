@@ -2,17 +2,16 @@ package main
 
 import (
 	"bytes"
-	"context"
+	"encoding/json"
 	"fmt"
 	"log"
+	"net/http"
 	"strings"
 
 	"os"
 
-	"github.com/joho/godotenv"
-	gogpt "github.com/sashabaranov/go-gpt3"
-
 	"github.com/dghubble/oauth1"
+	"github.com/joho/godotenv"
 )
 
 func main() {
@@ -23,30 +22,55 @@ func main() {
 	consumerSecret := os.Getenv("CONSUMER_SECRET")
 	accessToken := os.Getenv("ACCESS_TOKEN")
 	accessSecret := os.Getenv("TOKEN_SECRET")
+	prompt := os.Getenv("PROMPT")
 
 	if apiKey == "" || consumerKey == "" || consumerSecret == "" || accessToken == "" || accessSecret == "" {
 		panic("Missing required environment variable")
 	}
 
-	// Fetch from GPT-3
-	c := gogpt.NewClient(apiKey)
-	ctx := context.Background()
+	// Create the request body
+	jsonBody := fmt.Sprintf(`{"prompt": "%s", "max_tokens": 256, "model": "text-davinci-003"}`, prompt)
 
-	req := gogpt.CompletionRequest{
-		Model:     "text-davinci-003",
-		MaxTokens: 256,
-		Prompt:    os.Getenv("PROMPT"),
-	}
-
-	resp, err := c.CreateCompletion(ctx, req)
+	// Create the request
+	req, err := http.NewRequest("POST", "https://api.openai.com/v1/completions", bytes.NewBuffer([]byte(jsonBody)))
 
 	if err != nil {
-		log.Fatalf("Error when creating completion: %v", err)
+		log.Fatalf("Error when creating request: %v", err)
 	}
 
-	log.Printf("Completion was successful: %+v", resp)
+	// Add the headers
+	req.Header.Add("Authorization", fmt.Sprintf("Bearer %s",
+		apiKey))
+	req.Header.Add("Content-Type", "application/json")
 
-	trimmed := strings.TrimSpace(resp.Choices[0].Text)
+	client := &http.Client{}
+	resp, err := client.Do(req)
+
+	if err != nil {
+		log.Fatalf("Error when sending request: %v", err)
+	}
+
+	defer resp.Body.Close()
+
+	// Check the response
+	if resp.StatusCode != 200 {
+		log.Fatalf("Response was not OK: %v", resp)
+	}
+
+	// Parse the response
+	var respBody struct {
+		Choices []struct {
+			Text string `json:"text"`
+		} `json:"choices"`
+	}
+
+	err = json.NewDecoder(resp.Body).Decode(&respBody)
+
+	if err != nil {
+		log.Fatalf("Error when decoding response: %v", err)
+	}
+
+	trimmed := strings.TrimSpace(respBody.Choices[0].Text)
 
 	if trimmed == "" {
 		log.Fatalln("Result is empty")
@@ -64,9 +88,9 @@ func main() {
 
 	path := "https://api.twitter.com/2/tweets"
 
-	jsonBody := fmt.Sprintf(`{"text": "%s"}`, trimmed)
+	body := fmt.Sprintf(`{"text": "%s"}`, trimmed)
 
-	bodyReader := bytes.NewReader([]byte(jsonBody))
+	bodyReader := strings.NewReader(body)
 
 	response, err := httpClient.Post(path, "application/json", bodyReader)
 
