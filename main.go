@@ -52,7 +52,6 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error when posting to twitter: %v", err)
 	}
-
-	log.Printf("Response was OK: %v", resp)
 	defer resp.Body.Close()
+	log.Printf("Response was OK: %v", resp)
 }
