@@ -36,5 +36,5 @@ func Fetch() (string, error) {
 
 	trimmed := strings.TrimSpace(resp.Choices[0].Text)
 
-	return trimmed, err
+	return trimmed, nil
 }
