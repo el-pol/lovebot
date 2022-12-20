@@ -15,11 +15,7 @@ import (
 
 func main() {
 	godotenv.Load()
-	result, err := fetch.Fetch()
-
-	if err != nil {
-		log.Fatalf("Error when fetching: %v", err)
-	}
+	result := fetch.Fetch()
 
 	if result == "" {
 		log.Fatalln("Result is empty")
@@ -54,4 +50,5 @@ func main() {
 	}
 	defer resp.Body.Close()
 	log.Printf("Response was OK: %v", resp)
+
 }
