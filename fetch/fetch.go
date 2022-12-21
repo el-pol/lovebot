@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/joho/godotenv"
 )
@@ -36,7 +37,10 @@ func GetGenerated(prompt string) string {
 		apiKey))
 	req.Header.Add("Content-Type", "application/json")
 
-	client := &http.Client{}
+	client := &http.Client{
+		Timeout: time.Second * 10,
+	}
+
 	resp, err := client.Do(req)
 
 	if err != nil {

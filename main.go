@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"strings"
-
 	"os"
+	"strings"
+	"time"
 
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/dghubble/oauth1"
@@ -34,6 +34,8 @@ func HandleRequest(ctx context.Context) (string, error) {
 	token := oauth1.NewToken(accessToken, accessSecret)
 
 	httpClient := config.Client(oauth1.NoContext, token)
+
+	httpClient.Timeout = time.Second * 10
 
 	path := "https://api.twitter.com/2/tweets"
 
