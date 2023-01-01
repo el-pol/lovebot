@@ -85,7 +85,6 @@
 
 [![Lovebot Screen Shot][lovebot-screenshot]](https://www.polmilian.dev/lovebot_twitter.png)
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -134,10 +133,9 @@ My bot is live here: [https://twitter.com/LoveAdviceWiseG](https://twitter.com/L
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
+- [ ] Change the prompts to make it more creative
+- [ ] If a user tweets back, reply
+- [ ] Put responses in DB & make sure we don't have duplicates
 
 See the [open issues](https://github.com/el-pol/lovebot/issues) for a full list of proposed features (and known issues).
 
