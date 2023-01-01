@@ -207,5 +207,6 @@ Project Link: [https://github.com/el-pol/lovebot](https://github.com/el-pol/love
 [license-shield]: https://img.shields.io/github/license/el-pol/lovebot.svg?style=for-the-badge
 [license-url]: https://github.com/el-pol/lovebot/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[Go]:https://go.dev/ 
 [linkedin-url]: https://www.linkedin.com/in/pol-milian/
 [lovebot-screenshot]: https://www.polmilian.dev/lovebot_twitter.png
