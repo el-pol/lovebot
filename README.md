@@ -83,7 +83,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Lovebot Screen Shot][lovebot-screenshot]](https://www.polmilian.dev/lovebot_twitter.png)
+[!Lovebot Screen Shot](https://www.polmilian.dev/lovebot_twitter.png)
 
 Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
 
@@ -108,11 +108,9 @@ To get a local copy up and running follow these simple example steps.
 ### Prerequisites
 
 Install the Go packages by running:
-`
-* go
-  ```sh
+```sh
   go get
-  ```
+```
 
 ### Installation
 
